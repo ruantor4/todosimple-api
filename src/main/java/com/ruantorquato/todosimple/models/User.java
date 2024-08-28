@@ -61,6 +61,15 @@ private static final long serialVersionUID = 1L;
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
 
 	@Override
 	public int hashCode() {
