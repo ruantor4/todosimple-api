@@ -27,42 +27,42 @@ public class TaskController {
 	private TaskService taskService;
 	@Autowired
 	private UserService userService;
-	
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Task> findById(@PathVariable Long id){
+	public ResponseEntity<Task> findById(@PathVariable Long id) {
 		Task obj = taskService.findById(id);
 		return ResponseEntity.ok().body(obj);
-		
+
 	}
-	
+
 	@GetMapping("/user/{userId}")
-	public ResponseEntity <List<Task>> findAllByUserId(@PathVariable Long userId){
+	public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId) {
 		userService.findById(userId);
 		List<Task> objs = taskService.findAllByUserId(userId);
 		return ResponseEntity.ok().body(objs);
-		
+
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Void> create(@RequestBody Task obj){
+	public ResponseEntity<Void> create(@RequestBody Task obj) {
 		taskService.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-		
+
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody Task obj, @PathVariable Long id){
+	public ResponseEntity<Void> update(@RequestBody Task obj, @PathVariable Long id) {
 		obj.setId(id);
 		taskService.update(obj);
 		return ResponseEntity.noContent().build();
-		
+
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete (@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		taskService.delete(id);
 		return ResponseEntity.noContent().build();
-		
+
 	}
 }

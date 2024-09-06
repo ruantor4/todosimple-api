@@ -16,68 +16,41 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ruantorquato.todosimple.models.User;
 import com.ruantorquato.todosimple.services.UserService;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 
-	
 	@GetMapping("/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
+	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = userService.findById(id);
 		return ResponseEntity.ok().body(obj);
-		
+
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Void> create(@RequestBody User obj){
+	public ResponseEntity<Void> create(@RequestBody User obj) {
 		userService.create(obj);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updato(@RequestBody User obj, @PathVariable Long id){
+	public ResponseEntity<Void> updato(@RequestBody User obj, @PathVariable Long id) {
 		obj.setId(id);
 		userService.update(obj);
 		return ResponseEntity.noContent().build();
-		
+
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		userService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

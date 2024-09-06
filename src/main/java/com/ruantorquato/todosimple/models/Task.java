@@ -2,37 +2,44 @@ package com.ruantorquato.todosimple.models;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_task")
 public class Task implements Serializable {
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "id", unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", unique = true)
 	private User user;
-	
+
+	@Column(name = "description", length = 255, nullable = false)
+	@Size(min = 1, max = 255)
+	@NotBlank
 	private String description;
 
 	public Task() {
-		
+
 	}
 
 	public Task(Long id, User user, String description) {
 		super();
 		this.id = id;
-		
+
 		this.description = description;
 	}
 
@@ -44,8 +51,6 @@ private static final long serialVersionUID = 1L;
 		this.id = id;
 	}
 
-
-
 	public String getDescription() {
 		return description;
 	}
@@ -53,7 +58,6 @@ private static final long serialVersionUID = 1L;
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 
 	public User getUser() {
 		return user;
@@ -94,5 +98,4 @@ private static final long serialVersionUID = 1L;
 		return true;
 	}
 
-	
 }
