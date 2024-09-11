@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ruantorquato.todosimple.models.User;
 import com.ruantorquato.todosimple.repository.TaskRepository;
 import com.ruantorquato.todosimple.repository.UserRepository;
+import com.ruantorquato.todosimple.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -19,8 +20,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
-		return user.orElseThrow(
-				() -> new RuntimeException("Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
+		return user.orElseThrow(() -> new ResourceNotFoundException(id));
 
 	}
 
